@@ -5,5 +5,6 @@
 package logic
 
 import (
+	_ "server/internal/logic/menu"
 	_ "server/internal/logic/user"
 )

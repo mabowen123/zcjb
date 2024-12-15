@@ -10,6 +10,7 @@ import (
 	"server/internal/consts/redis"
 	"server/internal/consts/redis/user"
 	"server/internal/dao/internal"
+	"server/internal/model/do"
 	"server/internal/model/entity"
 )
 
@@ -30,16 +31,16 @@ var (
 )
 
 // Add your custom methods and functionality below.
-func (adminUserDao) GetUserByUsernameAndPassword(ctx context.Context, username string, password string) (*entity.AdminUser, error) {
-	userInfo := new(entity.AdminUser)
+func (adminUserDao) GetUserByUsernameAndPassword(ctx context.Context, username string, password string) (userInfo *entity.AdminUser, err error) {
+	err = AdminUser.Ctx(ctx).Fields("id,username").
+		Where(do.AdminUser{
+			Username: username,
+			Password: password,
+		}).Scan(&userInfo)
 
-	err := AdminUser.Ctx(ctx).Fields("id,username").
-		Where("username", username).
-		Where("password", password).
-		Scan(userInfo)
-
-	return userInfo, err
+	return
 }
+
 func (adminUserDao) RSetExToken(ctx context.Context, id uint, token string, ttl int64) bool {
 	err := g.Redis().SetEX(ctx, redis.GetKey(user.TOKEN, id), token, ttl)
 	return err == nil

@@ -5,8 +5,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 )
 
-const COMMON = 100001
-
-func Common(msg string) error {
-	return gerror.NewCode(gcode.New(COMMON, msg, nil))
-}
+var (
+	AUTH_ERR_CODE = gcode.New(401, "登录失效", nil)
+	AUTH_ERR      = gerror.NewCode(AUTH_ERR_CODE)
+)

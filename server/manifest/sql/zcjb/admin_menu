@@ -1,0 +1,12 @@
+CREATE TABLE `admin_menu` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父级菜单id',
+  `name` varchar(16) NOT NULL DEFAULT '' COMMENT '菜单名称',
+  `path` varchar(32) NOT NULL DEFAULT '' COMMENT '菜单路由',
+  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间戳',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间戳',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间戳',
+  PRIMARY KEY (`id`),
+  KEY `idx_parentId` (`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台菜单';

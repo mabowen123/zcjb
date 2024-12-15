@@ -2,8 +2,7 @@ package cmd
 
 import (
 	"context"
-	"fmt"
-	"server/internal/controller/user"
+	"server/internal/router/admin"
 	"server/utility"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -17,16 +16,13 @@ var (
 		Usage: utility.GetProjectName(),
 		Func: func(ctx context.Context, _ *gcmd.Parser) (err error) {
 			s := g.Server()
-			s.Group("admin", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
-				group.Middleware(ghttp.MiddlewareCORS)
-				group.Bind(
-					user.NewV1(),
-				)
+			s.Use(ghttp.MiddlewareCORS)
+			s.Use(ghttp.MiddlewareHandlerResponse)
+			s.Group("/", func(group *ghttp.RouterGroup) {
+				admin.RegisterRouter(group)
 			})
 
 			s.Run()
-			fmt.Println(ctx)
 			return nil
 		},
 	}

@@ -2,8 +2,6 @@ package user
 
 import (
 	"context"
-	"database/sql"
-	"errors"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/golang-jwt/jwt/v5"
 	"server/internal/consts/ierr"
@@ -28,11 +26,13 @@ func init() {
 func (s *sUser) GetUser(ctx context.Context, username string, password string) (*entity.AdminUser, error) {
 	userinfo, err := dao.AdminUser.GetUserByUsernameAndPassword(ctx, username, password)
 
-	if errors.Is(err, sql.ErrNoRows) {
-		return nil, ierr.Common("用户不存在")
-	} else if err != nil {
+	if err != nil {
 		g.Log().Errorf(ctx, "查询用户异常 username:%s  password:%s err:%s", username, password, err)
 		return nil, ierr.Common("查询用户异常")
+	}
+
+	if userinfo == nil {
+		return nil, ierr.Common("用户不存在")
 	}
 
 	return userinfo, nil
