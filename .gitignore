@@ -1,2 +1,12 @@
-web/node_modules/*
 .idea
+.idea/
+.DS_Store
+
+web/node_modules/*
+web/dist/*
+web/.env.development
+
+server/main
+server/manifest/config/config.yaml
+server/hack/config.yaml
+server/log/
