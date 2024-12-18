@@ -13,6 +13,6 @@
 import router from '@/router/index.js'
 
 const toDashboard = () => {
-  router.push('/dashboard')
+  router.push({name: 'Dashboard'})
 }
 </script>

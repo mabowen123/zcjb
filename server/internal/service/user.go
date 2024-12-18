@@ -16,6 +16,7 @@ type (
 		GetUser(ctx context.Context, username string, password string) (*entity.AdminUser, error)
 		GetToken(ctx context.Context, user *user.UserClaims) (string, error)
 		RemoveToken(ctx context.Context, tokenStr string) (bool, error)
+		GetCacheTokenStr(ctx context.Context, id uint) string
 	}
 )
 

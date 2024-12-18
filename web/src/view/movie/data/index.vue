@@ -1,8 +1,8 @@
 <template>
   <div>
-这是数据大盘
+    影院采集数据列表
   </div>
 </template>
-<script lang="ts" setup>
+<script setup>
 
 </script>

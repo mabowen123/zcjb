@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"server/internal/middleware"
 	"server/internal/router/admin"
 	"server/utility"
 
@@ -16,8 +17,7 @@ var (
 		Usage: utility.GetProjectName(),
 		Func: func(ctx context.Context, _ *gcmd.Parser) (err error) {
 			s := g.Server()
-			s.Use(ghttp.MiddlewareCORS)
-			s.Use(ghttp.MiddlewareHandlerResponse)
+			s.Use(middleware.Response, ghttp.MiddlewareCORS)
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				admin.RegisterRouter(group)
 			})

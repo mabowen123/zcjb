@@ -2,7 +2,6 @@ package admin
 
 import (
 	"github.com/gogf/gf/v2/net/ghttp"
-	"server/internal/controller/menu"
 	"server/internal/controller/user"
 	"server/internal/middleware"
 )
@@ -14,9 +13,6 @@ func RegisterRouter(group *ghttp.RouterGroup) {
 		)
 
 		group.Middleware(middleware.Auth)
-		group.Bind(
-			menu.NewV1(),
-		)
 
 	})
 }

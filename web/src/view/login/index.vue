@@ -18,36 +18,35 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import { ElMessage } from 'element-plus'
-import { useAdminUserStore } from '@/pinia/modules/admin_user'
-import router from '@/router/index.js'
+import {reactive, ref} from 'vue'
+import {ElMessage} from 'element-plus'
+import {useAdminUserStore} from '@/pinia/modules/admin_user'
+import {useRouterStore} from '@/pinia/modules/router'
+import router, { childrenRouter } from '@/router/index.js'
 
 const loginFormData = reactive({
   username: '',
   password: ''
 })
 
-const loginForm = ref('')
+const loginForm = ref(null)
 const rules = {
-  username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+  username: [{required: true, message: '请输入账号', trigger: 'blur'}],
+  password: [{required: true, message: '请输入密码', trigger: 'blur'}]
 }
 
 const handleLogin = () => {
   loginForm.value.validate(async (v) => {
     if (!v) {
       // 未通过前端静态验证
-      ElMessage({
-        type: 'error',
-        message: '请正确填写登录信息',
-        showClose: true
-      })
+      ElMessage.error({message: '请正确填写登录信息'})
       return
     }
     useAdminUserStore().login(loginFormData).then(res => {
       if (res) {
-        router.push('/dashboard')
+        ElMessage.success({message: '登录成功'})
+        useRouterStore().setRouterList(childrenRouter)
+        router.push({name: 'Dashboard'})
       }
     })
   })

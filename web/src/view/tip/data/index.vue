@@ -1,8 +1,9 @@
 <template>
   <div>
-这是数据大盘
+    这是线报列表
   </div>
 </template>
-<script lang="ts" setup>
+
+<script setup>
 
 </script>

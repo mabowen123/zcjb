@@ -72,3 +72,7 @@ func (*sUser) RemoveToken(ctx context.Context, tokenStr string) (bool, error) {
 	dao.AdminUser.RDelToken(ctx, userClaims.Id)
 	return true, nil
 }
+
+func (*sUser) GetCacheTokenStr(ctx context.Context, id uint) string {
+	return dao.AdminUser.RGetToken(ctx, id)
+}

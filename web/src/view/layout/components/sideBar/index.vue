@@ -1,11 +1,21 @@
-<script setup>
-
-</script>
-
 <template>
-
+  <el-menu
+      unique-opened
+      class="el-menu-vertical-demo"
+      router
+      default-active="/dashboard">
+    <SideItem :dataList="useRouterStore().routerList" />
+  </el-menu>
 </template>
 
-<style scoped>
+<script setup>
+import SideItem from "./sideItem.vue"
+import {useRouterStore} from "@/pinia/modules/router.js";
 
-</style>
+defineOptions({
+  name: "SideBar",
+  components: {
+    SideItem
+  }
+})
+</script>

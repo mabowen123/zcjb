@@ -12,3 +12,4 @@ pinia.use(createPersistedState({
 }));
 
 app.use(router).use(pinia).mount('#app')
+

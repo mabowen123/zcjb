@@ -10,7 +10,6 @@ import (
 	"server/internal/consts/redis"
 	"server/internal/consts/redis/user"
 	"server/internal/dao/internal"
-	"server/internal/model/do"
 	"server/internal/model/entity"
 )
 
@@ -31,14 +30,17 @@ var (
 )
 
 // Add your custom methods and functionality below.
-func (adminUserDao) GetUserByUsernameAndPassword(ctx context.Context, username string, password string) (userInfo *entity.AdminUser, err error) {
-	err = AdminUser.Ctx(ctx).Fields("id,username").
-		Where(do.AdminUser{
-			Username: username,
-			Password: password,
-		}).Scan(&userInfo)
+func (adminUserDao) GetUserByUsernameAndPassword(ctx context.Context, username string, password string) (*entity.AdminUser, error) {
+	var userInfo *entity.AdminUser
+	err := AdminUser.Ctx(ctx).
+		Fields(AdminUser.Columns().Id, AdminUser.Columns().Username).
+		Where(g.Map{
+			AdminUser.Columns().Username: username,
+			AdminUser.Columns().Password: password,
+		}).
+		Scan(&userInfo)
 
-	return
+	return userInfo, err
 }
 
 func (adminUserDao) RSetExToken(ctx context.Context, id uint, token string, ttl int64) bool {
@@ -49,4 +51,12 @@ func (adminUserDao) RSetExToken(ctx context.Context, id uint, token string, ttl 
 func (adminUserDao) RDelToken(ctx context.Context, id uint) bool {
 	_, err := g.Redis().Del(ctx, redis.GetKey(user.TOKEN, id))
 	return err == nil
+}
+
+func (adminUserDao) RGetToken(ctx context.Context, id uint) string {
+	s, err := g.Redis().Get(ctx, redis.GetKey(user.TOKEN, id))
+	if err != nil {
+		return ""
+	}
+	return s.String()
 }

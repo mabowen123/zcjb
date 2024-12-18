@@ -27,7 +27,9 @@ func GetJwtKey() []byte {
 }
 
 func GetDatabaseConn() map[string]interface{} {
-	return getConfig("config", "database").Map()
+	data := getConfig("config", "database").Map()
+	delete(data, "logger")
+	return data
 }
 
 func GetRedisConn() map[string]interface{} {

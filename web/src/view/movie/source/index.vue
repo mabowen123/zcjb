@@ -1,8 +1,9 @@
 <template>
   <div>
-这是数据大盘
+    这是影院采集数据管理
   </div>
 </template>
-<script lang="ts" setup>
+
+<script setup>
 
 </script>

@@ -3,6 +3,7 @@ package utility
 import (
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
+	"time"
 )
 
 func InitDB() {
@@ -17,7 +18,7 @@ func InitDB() {
 func InitRedis() {
 	ctx := context.Background()
 	for redisConn, _ := range GetRedisConn() {
-		_, err := g.Redis(redisConn).Conn(ctx)
+		err := g.Redis(redisConn).SetEX(ctx, GetProjectName(), time.Now().Format("2006-01-02 15:04:05"), 10)
 		if err != nil {
 			panic(redisConn + " redis链接异常")
 		}
