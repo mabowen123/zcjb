@@ -17,43 +17,42 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import {reactive, ref} from 'vue'
+<script lang="ts">
 import {ElMessage} from 'element-plus'
 import {useAdminUserStore} from '@/pinia/modules/admin_user'
-import {useRouterStore} from '@/pinia/modules/router'
-import router, { childrenRouter } from '@/router/index.js'
+import router from '@/router/index.js'
 
-const loginFormData = reactive({
-  username: '',
-  password: ''
-})
-
-const loginForm = ref(null)
-const rules = {
-  username: [{required: true, message: '请输入账号', trigger: 'blur'}],
-  password: [{required: true, message: '请输入密码', trigger: 'blur'}]
-}
-
-const handleLogin = () => {
-  loginForm.value.validate(async (v) => {
-    if (!v) {
-      // 未通过前端静态验证
-      ElMessage.error({message: '请正确填写登录信息'})
-      return
-    }
-    useAdminUserStore().login(loginFormData).then(res => {
-      if (res) {
-        ElMessage.success({message: '登录成功'})
-        useRouterStore().setRouterList(childrenRouter)
-        router.push({name: 'Dashboard'})
+export default {
+  data() {
+    return {
+      loginFormData: {
+        username: '',
+        password: ''
+      },
+      rules: {
+        username: [{required: true, message: '请输入账号', trigger: 'blur'}],
+        password: [{required: true, message: '请输入密码', trigger: 'blur'}]
       }
-    })
-  })
+    }
+  },
+  methods: {
+    handleLogin() {
+      this.$refs.loginForm.validate(async (v) => {
+        if (v) {
+          useAdminUserStore().login(this.loginFormData).then(res => {
+            if (res) {
+              ElMessage.success({message: '登录成功'})
+              router.push({name: 'Dashboard'})
+            }
+          })
+        }
+      })
+    }
+  }
 }
+
 
 </script>
-
 <style scoped>
 .login-container {
   display: flex;

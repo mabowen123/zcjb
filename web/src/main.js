@@ -4,6 +4,7 @@ import router from './router'
 import 'element-plus/dist/index.css'
 import {createPinia} from 'pinia'
 import { createPersistedState } from 'pinia-plugin-persistedstate'
+import '@/styles/index.scss'
 
 const app = createApp(App)
 const pinia = createPinia();

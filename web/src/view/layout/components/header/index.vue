@@ -6,33 +6,30 @@
   >
     <el-menu-item>
       <img
-          style="width: 50px"
           src="@/assets/logo.svg"
+          style="width: 100px;height: 100px"
           alt="Element logo"
       />
     </el-menu-item>
     <el-sub-menu index="0">
       <template #title>个人中心</template>
       <el-menu-item index="0-1" @click="logout">登出</el-menu-item>
-      <el-menu-item index="0-2" @click="clear()">清理缓存</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
-<script setup>
+<script>
 import {useAdminUserStore} from '@/pinia/modules/admin_user'
-import {useRouterStore} from '@/pinia/modules/router.js'
-import router, {childrenRouter} from '@/router/index.js'
+import router from '@/router/index.js'
 
-defineOptions({
-  name: 'Header'
-})
-const logout = () => {
-  useAdminUserStore().logout().then(_ => {
-    router.push('/login')
-  })
-}
-const clear = () => {
-  useRouterStore().setRouterList(childrenRouter)
-}
+export default {
+  name: 'Header',
+  methods: {
+    logout() {
+      useAdminUserStore().logout().then(_ => {
+        router.push('/login')
+      })
+    }
+  }
 
+}
 </script>

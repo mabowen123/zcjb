@@ -3,19 +3,27 @@
       unique-opened
       class="el-menu-vertical-demo"
       router
-      default-active="/dashboard">
-    <SideItem :dataList="useRouterStore().routerList" />
+      default-active="/dashboard"
+      style="height: calc(100vh - 100px);"
+  >
+    <SideItem :dataList="childrenRouter"/>
   </el-menu>
 </template>
 
-<script setup>
+<script>
 import SideItem from "./sideItem.vue"
-import {useRouterStore} from "@/pinia/modules/router.js";
+import {childrenRouter} from '@/router/index.js'
 
-defineOptions({
+export default {
   name: "SideBar",
+  data() {
+    return {
+      childrenRouter
+    }
+  },
   components: {
     SideItem
   }
-})
+}
+
 </script>

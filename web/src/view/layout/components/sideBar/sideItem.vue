@@ -13,14 +13,15 @@
     </el-sub-menu>
   </template>
 </template>
-<script setup>
-defineOptions({
-  name: 'SiteItem'
-})
-defineProps({
-  dataList: {
-    type: Array,
-    default: []
+<script>
+export default {
+  name: 'SiteItem',
+  props: {
+    dataList: {
+      type: Array,
+      default: []
+    }
   }
-})
+}
+
 </script>

@@ -7,8 +7,9 @@
     </transition>
   </router-view>
 </template>
-<script setup>
-defineOptions({
-  name:"AppMain",
-})
+<script>
+export default {
+  name: "AppMain",
+
+}
 </script>
